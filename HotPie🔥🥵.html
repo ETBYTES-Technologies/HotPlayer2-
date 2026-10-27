@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 HEAT CHECK · super hot edition 🔥</title>
+    <style>
+        /* -------------------- GLOBAL & RESET -------------------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Tahoma', 'Geneva', 'Verdana', sans-serif;
+            background: radial-gradient(circle at 30% 20%, #1e0a2e, #0c0414);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            color: #fff5f9;
+        }
+
+        /* -------------------- CARD CONTAINER -------------------- */
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: linear-gradient(145deg, #2f1548, #1e0b2e);
+            border-radius: 3rem 1rem 3rem 1rem;
+            padding: 2.5rem 1.8rem;
+            box-shadow: 0 20px 40px rgba(255, 0, 128, 0.3),
+                        0 0 0 2px rgba(255, 105, 180, 0.2),
+                        inset 0 1px 10px rgba(255, 200, 255, 0.1);
+            border: 1px solid rgba(255, 105, 180, 0.4);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(2px);
+        }
+
+        /* -------------------- TYPOGRAPHY -------------------- */
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-align: center;
+            color: #ffb6e6;
+            text-shadow: 0 0 12px #ff1493, 0 0 25px #ff69b4, 0 0 45px #b3006b;
+            margin-bottom: 0.2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.3rem;
+            animation: softPulse 3s infinite alternate;
+        }
+
+        @keyframes softPulse {
+            0% { text-shadow: 0 0 8px #ff1493, 0 0 18px #ff69b4; }
+            100% { text-shadow: 0 0 18px #ff69b4, 0 0 40px #ff1493, 0 0 60px #ffb6e6; }
+        }
+
+        .subtitle {
+            text-align: center;
+            font-style: italic;
+            color: #e8b0d9;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px dashed #ff69b4;
+            padding-bottom: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        /* -------------------- DICE & BUTTONS -------------------- */
+        #game-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .die-face {
+            width: 130px;
+            height: 130px;
+            background: radial-gradient(circle at 30% 30%, #fff0fa, #ffd9f0);
+            color: #1e0b2e;
+            font-size: 4rem;
+            font-weight: 800;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5),
+                        0 0 0 4px #ffb6e6,
+                        0 0 30px #ff69b4;
+            transition: all 0.2s ease;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 5px rgba(255, 20, 147, 0.5);
+            animation: floatDice 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes floatDice {
+            0% { transform: translateY(0px) rotate(0deg); }
+            100% { transform: translateY(-8px) rotate(2deg); }
+        }
+
+        button {
+            background: linear-gradient(135deg, #ff1493, #b3006b);
+            color: white;
+            border: none;
+            padding: 16px 36px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            margin: 6px;
+            box-shadow: 0 6px 0 #4d0026, 0 10px 25px rgba(255, 20, 147, 0.4);
+            text-transform: uppercase;
+            border: 1px solid #ff9bd6;
+            position: relative;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #ff4da6, #d4007a);
+            transform: scale(1.04) translateY(-2px);
+            box-shadow: 0 8px 0 #4d0026, 0 15px 35px #ff1493;
+        }
+
+        button:active {
+            transform: translateY(4px) scale(0.98);
+            box-shadow: 0 2px 0 #4d0026, 0 10px 20px #ff1493;
+        }
+
+        #reset-btn {
+            background: linear-gradient(135deg, #7a3d8a, #4a1e54);
+            box-shadow: 0 6px 0 #2e0d36, 0 8px 20px #7a3d8a;
+            border-color: #c77ddf;
+        }
+
+        #reset-btn:hover {
+            background: linear-gradient(135deg, #a35db8, #642a72);
+            box-shadow: 0 8px 0 #2e0d36, 0 12px 30px #b06ad0;
+        }
+
+        /* -------------------- QUEST DISPLAY -------------------- */
+        .hidden {
+            display: none !important;
+        }
+
+        #quest-display {
+            animation: fadeIn 0.6s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+            background: rgba(60, 20, 80, 0.6);
+            border-radius: 2rem 0.5rem 2rem 0.5rem;
+            padding: 1.8rem 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid #ff69b4;
+            box-shadow: inset 0 0 30px #310034, 0 15px 25px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        #quest-mode {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffb6e6;
+            text-shadow: 0 0 15px #ff1493;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 0.2rem;
+        }
+
+        #quest-level {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffb86b;
+            text-shadow: 0 0 12px #ff4500;
+            letter-spacing: 1px;
+            margin-bottom: 1.2rem;
+            text-transform: uppercase;
+        }
+
+        #quest-text {
+            font-size: 1.4rem;
+            line-height: 1.7;
+            margin: 1.5rem 0 2rem;
+            color: #fff0f8;
+            font-weight: 400;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.25);
+            padding: 1.2rem 1rem;
+            border-radius: 1.5rem 0.5rem 1.5rem 0.5rem;
+            border-left: 6px solid #ff1493;
+            border-right: 6px solid #b3006b;
+            font-style: italic;
+            word-break: break-word;
+        }
+
+        /* -------------------- SCOREBOARD -------------------- */
+        #score-board {
+            margin-top: 2.2rem;
+            background: #1f0d2c;
+            padding: 1.4rem 1.2rem;
+            border-radius: 1.5rem 0.8rem 1.5rem 0.8rem;
+            border: 1px solid #ff69b4;
+            box-shadow: inset 0 0 20px #2e0033;
+        }
+
+        #score-board h2 {
+            font-size: 1.5rem;
+            color: #ffb6e6;
+            text-shadow: 0 0 10px #ff1493;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        #scores {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            justify-content: center;
+        }
+
+        #scores li {
+            background: linear-gradient(145deg, #4b1e5e, #2e0d3a);
+            padding: 0.9rem 1.2rem;
+            border-radius: 2rem 0.6rem 2rem 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffe3f0;
+            border: 1px solid #ff69b4;
+            box-shadow: 0 5px 0 #17001c, 0 6px 12px #b3006b;
+            flex: 1 1 160px;
+            justify-content: space-between;
+            letter-spacing: 0.5px;
+        }
+
+        .player-name {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .player-score {
+            background: #ffb6e6;
+            color: #2e0d3a;
+            font-weight: 800;
+            padding: 0.2rem 0.9rem;
+            border-radius: 40px;
+            font-size: 1.3rem;
+            box-shadow: inset 0 0 8px #ff69b4;
+        }
+
+        /* -------------------- ROMANTIC / HOT EXTRAS -------------------- */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .floating-hearts span {
+            position: absolute;
+            color: #ff69b4;
+            font-size: 1.8rem;
+            opacity: 0.2;
+            animation: floatHearts linear infinite;
+            bottom: -10%;
+            text-shadow: 0 0 20px #ff1493;
+        }
+
+        @keyframes floatHearts {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
+            100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+        }
+
+        .turn-indicator {
+            text-align: center;
+            margin: 0.6rem 0 0.2rem;
+            font-size: 1.2rem;
+            color: #ffb6e6;
+            letter-spacing: 2px;
+            font-weight: 300;
+            text-transform: uppercase;
+        }
+
+        .turn-indicator span {
+            background: #ff1493;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-weight: 700;
+            color: #1e0b2e;
+            box-shadow: 0 0 20px #ff69b4;
+        }
+
+        .romantic-note {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #dda0dd;
+            margin-top: 1.5rem;
+            letter-spacing: 1px;
+            font-style: italic;
+            border-top: 1px solid #ff69b4;
+            padding-top: 1rem;
+        }
+
+        /* -------------------- RESPONSIVE -------------------- */
+        @media (max-width: 500px) {
+            .container { padding: 1.5rem 1rem; }
+            h1 { font-size: 2.4rem; }
+            .die-face { width: 100px; height: 100px; font-size: 3rem; }
+            button { font-size: 1rem; padding: 12px 22px; }
+            #quest-text { font-size: 1.1rem; padding: 0.8rem; }
+            #quest-mode { font-size: 1.6rem; }
+            #scores li { font-size: 1rem; padding: 0.7rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- floating hearts background -->
+    <div class="floating-hearts" id="hearts"></div>
+
+    <div class="container">
+        <h1>🔥 HEAT CHECK 🔥</h1>
+        <p class="subtitle">3 Girls | 1 Male | One Dice | Pure Heat</p>
+
+        <!-- turn display -->
+        <div class="turn-indicator" id="turn-display">
+            CURRENT TURN: <span id="current-player">Player 1</span>
+        </div>
+
+        <div id="game-area">
+            <div id="dice-display">
+                <div class="die-face" id="die1">1</div>
+            </div>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+                <button id="roll-btn">ROLL DICE</button>
+                <button id="reset-btn">RESET GAME</button>
+            </div>
+        </div>
+
+        <!-- QUEST DISPLAY -->
+        <div id="quest-display" class="hidden">
+            <h2 id="quest-mode">TRUTH</h2>
+            <h3 id="quest-level">TEASE</h3>
+            <p id="quest-text">Loading your hot quest...</p>
+            <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+                <button id="next-btn">NEXT TURN</button>
+            </div>
+        </div>
+
+        <!-- SCOREBOARD -->
+        <div id="score-board">
+            <h2>💋 Scoreboard 💋</h2>
+            <ul id="scores"></ul>
+        </div>
+
+        <div class="romantic-note">
+            ✨ whisper. touch. dare. repeat. ✨
+        </div>
+    </div>
+
+    <script>
+        (function(){
+            // ----------------------------------------------------------------
+            // 1. GAME DATA – EXPANDED (original + more, no removals)
+            // ----------------------------------------------------------------
+            const GAME_DATA = {
+                phases: {
+                    TRUTH: [
+                        "Confess your craziest lustful thought about any player in this room right now.",
+                        "Name the body part you want to worship first if you were stranded with one person here.",
+                        "Have you ever imagined having threesome energy with two people here? Describe it.",
+                        "What is the dirtiest thing you want to be whispered in your ear tonight?",
+                        "Which player here smells like trouble? What specifically about their scent turns you on?",
+                        "Admit: Who would you drag into a closet if the lights went out right now?",
+                        // extra truths (hot & romantic)
+                        "Describe the perfect slow kiss you've had – or want to have – with someone in this room.",
+                        "What's the most seductive thing someone could do to you without touching you?",
+                        "If you could only whisper one secret to the person you're most drawn to, what would it be?",
+                        "Who here has the most distracting walk? Describe how they move."
+                    ],
+                    DARE: [
+                        "Allow the person to your left to blindfold you and kiss your jawline for 30 seconds. You guess who.",
+                        "Remove one item of clothing. If you're already naked, take off something closer to the skin (socks, shoes, jewelry).",
+                        "Sit on the lap of the player opposite you and whisper what you'd do to them in bed.",
+                        "Let the group vote on who gets to spank you once. Hard enough to sting, soft enough to smile.",
+                        "Feed the person to your right a strawberry (or candy) using only your mouth. Hands free.",
+                        "Pour a tiny drop of wine/water down the neck of the person chosen by dice roll. Lick it up.",
+                        // extra dares
+                        "Maintain eye contact with the most attractive player while you describe your ideal date.",
+                        "Give a 20-second shoulder massage to the person who rolled last – with slow, deliberate pressure.",
+                        "Take the hand of the player across from you and trace a heart on their palm with your tongue.",
+                        "Whisper a compliment so dirty it makes them blush, then gently bite your own lip."
+                    ],
+                    TOGETHER: [
+                        "Pick two people. One stands behind the other. Whisper a dirty secret to the back person, then kiss the neck of the front person.",
+                        "Form a chain of 3 people holding hands. The 4th is the 'Master'. The Master touches any hand in the chain whenever they want.",
+                        "Two players pick a spot on the third player's body with their lips (no hands!) and map out how they got there without lifting heads.",
+                        "Everyone closes their eyes. One person traces a shape on another's palm. They must guess the shape to earn a kiss.",
+                        // extra together
+                        "All four players share a single whispered secret in a circle – each person adds one word.",
+                        "Two players make eye contact for 30 seconds while the others describe a fantasy involving them."
+                    ]
+                },
+                levels: {
+                    TEASE: [
+                        "Keep eye contact for 10 seconds. If you look away, you owe a lap dance to the roller.",
+                        "Recite a sexy line from a movie and deliver it directly to the face of the player clockwise.",
+                        "Let the roller pin your wrists gently against the chair for 10 seconds.",
+                        "Trace the outline of the player next to you's lips with your index finger. Slowly.",
+                        // extra tease
+                        "Blow a gentle kiss to the player of your choice – and tell them exactly where you'd want it to land.",
+                        "Use only your eyes to undress someone in the room – describe what you see."
+                    ],
+                    SPARK: [
+                        "Give a sensual foot massage to the player opposite for 2 minutes.",
+                        "Bite your lower lip softly while looking at the player you find most attractive for 5 full seconds.",
+                        "Let the player to your right draw a small heart on your inner thigh with their fingertip.",
+                        "Whisper three things you love about the body of the person across from you.",
+                        // extra spark
+                        "Play with the hair of the person next to you while complimenting their neck.",
+                        "Take the hand of the player you're most attracted to and kiss each knuckle slowly."
+                    ],
+                    IGNITE: [
+                        "Kiss the neck of the person who rolled the highest number so far for 10 continuous seconds.",
+                        "Straddle the lap of the player to your left (fully clothed) and stay until the next roll.",
+                        "Let the group touch wherever they want on your visible body for 10 seconds. You can't flinch.",
+                        "The person opposite you picks one song. You have to body roll slowly to it.",
+                        "Take a sip of drink from the glass held by the person who loves you least in this room.",
+                        // extra ignite
+                        "Give a 10-second hug to the player you find most irresistible – whisper something filthy.",
+                        "Slow dance with the person across from you for one full minute, no music needed."
+                    ]
+                }
+            };
+
+            // ----------------------------------------------------------------
+            // 2. GAME STATE
+            // ----------------------------------------------------------------
+            const PLAYERS = [
+                { name: 'Player 1 👑', score: 0 },
+                { name: 'Player 2 🌹', score: 0 },
+                { name: 'Player 3 💋', score: 0 },
+                { name: 'Player 4 🔥', score: 0 }
+            ];
+
+            let currentPlayerIndex = 0;   // whose turn it is
+            let round = 1;
+
+            // mapping roll -> phase + level + points
+            // per README: 1-2 TRUTH/TEASE, 3-4 DARE/SPARK, 5 TOGETHER/IGNITE, 6 WILD (any)
+            function getQuestFromRoll(roll) {
+                let mode, level, points;
+                let questPool;
+                let quest;
+
+                if (roll === 1 || roll === 2) {
+                    mode = 'TRUTH';
+                    level = 'TEASE';
+                    points = 1;
+                    // choose from TRUTH + a bit of level TEASE (both are spicy)
+                    const truthPool = GAME_DATA.phases.TRUTH;
+                    const teasePool = GAME_DATA.levels.TEASE;
+                    // mix but stay true: we pick from TRUTH mostly, but add a tease whisper
+                    const combined = [...truthPool, ...teasePool];
+                    quest = combined[Math.floor(Math.random() * combined.length)];
+                } else if (roll === 3 || roll === 4) {
+                    mode = 'DARE';
+                    level = 'SPARK';
+                    points = 2;
+                    const darePool = GAME_DATA.phases.DARE;
+                    const sparkPool = GAME_DATA.levels.SPARK;
+                    const combined = [...darePool, ...sparkPool];
+                    quest = combined[Math.floor(Math.random() * combined.length)];
+                } else if (roll === 5) {
+                    mode = 'TOGETHER';
+                    level = 'IGNITE';
+                    points = 3;
+                    const togetherPool = GAME_DATA.phases.TOGETHER;
+                    const ignitePool = GAME_DATA.levels.IGNITE;
+                    const combined = [...togetherPool, ...ignitePool];
+                    quest = combined[Math.floor(Math.random() * combined.length)];
+                } else { // roll === 6  → WILD
+                    // wildcard: pick random phase & level
+                    const phases = ['TRUTH', 'DARE', 'TOGETHER'];
+                    const levels = ['TEASE', 'SPARK', 'IGNITE'];
+                    mode = phases[Math.floor(Math.random() * phases.length)];
+                    level = levels[Math.floor(Math.random() * levels.length)];
+                    points = 5; // wild = 5 points per README
+                    // pick from the chosen phase array
+                    const phaseKey = mode;
+                    const levelKey = level;
+                    // try to combine both sources for more spice
+                    const phasePool = GAME_DATA.phases[phaseKey] || [];
+                    const levelPool = GAME_DATA.levels[levelKey] || [];
+                    const combined = [...phasePool, ...levelPool];
+                    quest = combined[Math.floor(Math.random() * combined.length)] || "Wildcard! Make up your own sexy dare.";
+                }
+
+                // safety fallback
+                if (!quest) quest = "Whisper something hot to the person on your left.";
+
+                return { mode, level, quest, points, roll };
+            }
+
+            // ----------------------------------------------------------------
+            // 3. DOM ELEMENTS
+            // ----------------------------------------------------------------
+            const die1 = document.getElementById('die1');
+            const rollBtn = document.getElementById('roll-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const gameArea = document.getElementById('game-area');
+            const questDisplay = document.getElementById('quest-display');
+            const questMode = document.getElementById('quest-mode');
+            const questLevel = document.getElementById('quest-level');
+            const questText = document.getElementById('quest-text');
+            const nextBtn = document.getElementById('next-btn');
+            const scoresList = document.getElementById('scores');
+            const currentPlayerSpan = document.getElementById('current-player');
+
+            // ----------------------------------------------------------------
+            // 4. RENDER SCORES
+            // ----------------------------------------------------------------
+            function renderScores() {
+                scoresList.innerHTML = '';
+                PLAYERS.forEach((player) => {
+                    const li = document.createElement('li');
+                    const nameSpan = document.createElement('span');
+                    nameSpan.className = 'player-name';
+                    nameSpan.textContent = player.name;
+                    const scoreSpan = document.createElement('span');
+                    scoreSpan.className = 'player-score';
+                    scoreSpan.textContent = player.score;
+                    li.appendChild(nameSpan);
+                    li.appendChild(scoreSpan);
+                    scoresList.appendChild(li);
+                });
+            }
+
+            // ----------------------------------------------------------------
+            // 5. UPDATE TURN INDICATOR
+            // ----------------------------------------------------------------
+            function updateTurnDisplay() {
+                currentPlayerSpan.textContent = PLAYERS[currentPlayerIndex].name;
+            }
+
+            // ----------------------------------------------------------------
+            // 6. ROLL DICE HANDLER
+            // ----------------------------------------------------------------
+            rollBtn.addEventListener('click', function() {
+                // random roll 1-6
+                const roll = Math.floor(Math.random() * 6) + 1;
+                die1.textContent = roll;
+
+                // get quest
+                const { mode, level, quest, points } = getQuestFromRoll(roll);
+
+                // update quest display
+                questMode.textContent = mode;
+                questLevel.textContent = level;
+                questText.textContent = quest;
+
+                // show quest area, hide game area
+                gameArea.classList.add('hidden');
+                questDisplay.classList.remove('hidden');
+
+                // award points to current player
+                PLAYERS[currentPlayerIndex].score += points;
+                renderScores();
+
+                // store the current points for later (no need, already added)
+                // but we need to know if it's wildcard etc. – not necessary.
+
+                // optional: update turn display stays the same until next turn
+            });
+
+            // ----------------------------------------------------------------
+            // 7. NEXT TURN HANDLER – switch player, hide quest, show dice
+            // ----------------------------------------------------------------
+            nextBtn.addEventListener('click', function() {
+                // hide quest, show game area
+                questDisplay.classList.add('hidden');
+                gameArea.classList.remove('hidden');
+
+                // move to next player
+                currentPlayerIndex = (currentPlayerIndex + 1) % PLAYERS.length;
+                if (currentPlayerIndex === 0) {
+                    round++;
+                    // we could display round, but not required. We'll keep it simple.
+                }
+                updateTurnDisplay();
+
+                // reset die face to a neutral look? keep it, but maybe set to '?'
+                die1.textContent = '?'; // nice touch
+            });
+
+            // ----------------------------------------------------------------
+            // 8. RESET GAME
+            // ----------------------------------------------------------------
+            resetBtn.addEventListener('click', function() {
+                // reset scores
+                PLAYERS.forEach(p => p.score = 0);
+                // reset current player to first
+                currentPlayerIndex = 0;
+                round = 1;
+                // reset UI
+                renderScores();
+                updateTurnDisplay();
+                die1.textContent = '1';
+                gameArea.classList.remove('hidden');
+                questDisplay.classList.add('hidden');
+                questText.textContent = 'Loading your hot quest...';
+            });
+
+            // ----------------------------------------------------------------
+            // 9. INITIAL RENDER + HEARTS BACKGROUND
+            // ----------------------------------------------------------------
+            renderScores();
+            updateTurnDisplay();
+
+            // create floating hearts
+            function createHearts() {
+                const heartsContainer = document.getElementById('hearts');
+                const heartCount = 25;
+                for (let i = 0; i < heartCount; i++) {
+                    const heart = document.createElement('span');
+                    heart.textContent = ['❤️', '💖', '💋', '🔥', '💗', '💓'][Math.floor(Math.random() * 6)];
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.fontSize = (Math.random() * 2 + 1.2) + 'rem';
+                    heart.style.animationDuration = (Math.random() * 12 + 8) + 's';
+                    heart.style.animationDelay = (Math.random() * 10) + 's';
+                    heart.style.opacity = Math.random() * 0.25 + 0.1;
+                    heartsContainer.appendChild(heart);
+                }
+            }
+            createHearts();
+
+            // ----------------------------------------------------------------
+            // 10. EXTRA: make the die "roll" animation on click (quick)
+            // ----------------------------------------------------------------
+            rollBtn.addEventListener('mousedown', function() {
+                die1.style.transform = 'rotate(15deg) scale(0.95)';
+                setTimeout(() => die1.style.transform = '', 150);
+            });
+
+            // ensure die resets after click
+            rollBtn.addEventListener('click', function() {
+                setTimeout(() => {
+                    die1.style.transform = '';
+                }, 200);
+            });
+
+        })();
+    </script>
+</body>
+</html>
